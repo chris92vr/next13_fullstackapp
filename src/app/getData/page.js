@@ -1,24 +1,24 @@
 'use client';
-import addData from '@/firebase/firestore/addData';
+import React from 'react';
+import getAllDocuments from '@/firebase/firestore/getAllData';
 
-export default function Home() {
-  const handleForm = async () => {
-    const data = {
-      name: 'John White',
-      house: 'Snow',
-    };
-    // generate a random id
-    const id = Math.random().toString(36).substring(2);
-    const { result, error } = await addData('users', id, data);
-    console.log('result', result);
+function Page() {
+  // display all documents in the collection 'posts'
+  async function getAllPosts() {
+    const { result, error } = await getAllDocuments('users');
     if (error) {
       return console.log(error);
     }
-  };
-
+    console.log(result);
+  }
   return (
-    <div>
-      <button onClick={handleForm}>Add data</button>
+    <div className="wrapper">
+      <div className="form-wrapper">
+        <h1 className="mt-60 mb-30">Get all data</h1>
+        <button onClick={getAllPosts}>Get all data</button>
+      </div>
     </div>
   );
 }
+
+export default Page;

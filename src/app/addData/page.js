@@ -4,23 +4,22 @@ import addData from '@/firebase/firestore/addData';
 import { useRouter } from 'next/navigation';
 
 function Page() {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [namePost, setNamePost] = React.useState('');
+  const [contentPost, setContentPost] = React.useState('');
+
   const data = {
-    name: username,
-    password: password,
+    name: namePost,
+    content: contentPost,
   };
-  const id = Math.random().toString(36).substring(2);
-  const router = useRouter();
+
+  const id =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
 
   const handleForm = async (event) => {
     event.preventDefault();
 
-    const { result, error } = await addData('users', id, data);
-    console.log('result', result);
-    if (error) {
-      return console.log(error);
-    }
+    const { result, error } = await addData('posts', id, data);
 
     if (error) {
       return console.log(error);
@@ -28,36 +27,35 @@ function Page() {
 
     // else successful
     console.log(result);
-    return router.push('/getData');
   };
   return (
     <div className="wrapper">
       <div className="form-wrapper">
-        <h1 className="mt-60 mb-30">Sign up</h1>
+        <h1 className="mt-60 mb-30">Add data</h1>
         <form onSubmit={handleForm} className="form">
-          <label htmlFor="username">
-            <p>Username</p>
+          <label htmlFor="namePost">
+            <p>Name post</p>
             <input
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setNamePost(e.target.value)}
               required
               type="text"
-              name="username"
-              id="username"
-              placeholder="username"
+              name="namePost"
+              id="namePost"
+              placeholder="name post"
             />
           </label>
-          <label htmlFor="password">
-            <p>Password</p>
+          <label htmlFor="contentPost">
+            <p>Content post</p>
             <input
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setContentPost(e.target.value)}
               required
-              type="password"
-              name="password"
-              id="password"
-              placeholder="password"
+              type="text"
+              name="contentPost"
+              id="contentPost"
+              placeholder="content post"
             />
           </label>
-          <button type="submit">Sign up</button>
+          <button type="submit">Add data</button>
         </form>
       </div>
     </div>
