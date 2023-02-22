@@ -2,14 +2,12 @@
 import './globals.css';
 import { AuthContextProvider } from '@/context/AuthContext';
 
-export default function RootLayout({ children }) {
+export default function layout({ children }) {
   return (
-    <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
+    <html>
+      <head>
+        <title>My App</title>
+      </head>
       <body>
         <AuthContextProvider>{children}</AuthContextProvider>
       </body>
