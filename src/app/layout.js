@@ -1,6 +1,7 @@
 'use client';
 import './globals.css';
 import { AuthContextProvider } from '@/context/AuthContext';
+import Navbar from '@/component/navbar';
 
 export default function layout({ children }) {
   return (
@@ -9,7 +10,10 @@ export default function layout({ children }) {
         <title>My App</title>
       </head>
       <body>
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <AuthContextProvider>
+          <Navbar />
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );
