@@ -2,11 +2,25 @@
 import React from 'react';
 import signIn from '@/firebase/auth/signin';
 import { useRouter } from 'next/navigation';
+import { useAuthContext } from '@/context/AuthContext';
 
 function Page() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const router = useRouter();
+  const { user } = useAuthContext();
+
+  // if user is logged in, render message
+  if (user) {
+    return (
+      <div className="wrapper">
+        <div className="form-wrapper">
+          <h1 className="mt-60 mb-30">You are already logged in</h1>
+          <button onClick={() => router.push('/')}>Go to home page</button>
+        </div>
+      </div>
+    );
+  }
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -14,7 +28,10 @@ function Page() {
     const { result, error } = await signIn(email, password);
 
     if (error) {
-      return console.log(error);
+      // show error message to user using DOM manipulation
+      const errorElement = document.querySelector('.error');
+      errorElement.textContent = error.message;
+      return;
     }
 
     // else successful
@@ -24,7 +41,7 @@ function Page() {
   return (
     <div className="wrapper">
       <div className="form-wrapper">
-        <h1 className="mt-60 mb-30">Sign up</h1>
+        <h1 className="login-title">Sign in</h1>
         <form onSubmit={handleForm} className="form">
           <label htmlFor="email">
             <p>Email</p>
@@ -48,7 +65,13 @@ function Page() {
               placeholder="password"
             />
           </label>
+
           <button type="submit">Sign up</button>
+          <p>
+            {' '}
+            Don't have an account? <a href="/signup"> Sign up </a>
+          </p>
+          <h2 className="error"></h2>
         </form>
       </div>
     </div>
