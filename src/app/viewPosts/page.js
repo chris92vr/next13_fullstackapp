@@ -17,7 +17,6 @@ function Page() {
 
     getPosts();
   }, []);
-
   if (!user) {
     return (
       <div className="wrapper">
@@ -46,14 +45,26 @@ function Page() {
                 Go to create post page
               </button>
               {null !== posts && undefined !== posts && posts.length > 0 ? (
-                posts.map((post, index) => (
-                  <div key={index}>
-                    <p>{post.name}</p>
+                posts.map((post) => (
+                  <div key={post.id} className="post">
+                    <h3> Name: {post.name}</h3>
+                    <p>Content:</p>
                     <p>{post.content}</p>
+                    <button onClick={() => router.push(`/post/${post.id}`)}>
+                      Go to post page
+                    </button>
+                    <button onClick={() => router.push(`/editPost/${post.id}`)}>
+                      Go to edit post page
+                    </button>
+                    <button
+                      onClick={() => router.push(`/deletePost/${post.id}`)}
+                    >
+                      Go to delete post page
+                    </button>
                   </div>
                 ))
               ) : (
-                <p>No posts</p>
+                <p>no posts</p>
               )}
             </div>
           </div>

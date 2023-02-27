@@ -9,16 +9,17 @@ function Page() {
   const [contentPost, setContentPost] = React.useState('');
   const { user } = useAuthContext();
   const date = new Date();
+  const id =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
   const data = {
     name: namePost,
     content: contentPost,
     createdAt: date,
     createdBy: user.email,
+    id: id,
   };
 
-  const id =
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
   const router = useRouter();
 
   const handleForm = async (event) => {
@@ -43,7 +44,7 @@ function Page() {
           <h1 className="mt-60 mb-30">home</h1>
           <div className="form">
             <p>You are not logged in</p>
-            <button onClick={() => Router.push('/signin')}>Sign in</button>
+            <button onClick={() => router.push('/signin')}>Sign in</button>
           </div>
         </div>
       </div>
